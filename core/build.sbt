@@ -2,9 +2,13 @@ import ScalaJSKeys._
 
 scalaJSSettings
 
-scalaVersion := "2.11.0-M7"
+scalaVersion := "2.10.3"
 
 name := "Scala.js simple pickling"
+
+resolvers += Resolver.sonatypeRepo("releases")
+
+addCompilerPlugin("org.scalamacros" % "paradise" % "2.0.0-M2" cross CrossVersion.full)
 
 libraryDependencies ++= Seq(
     "org.scala-lang" % "scala-reflect" % scalaVersion.value,
