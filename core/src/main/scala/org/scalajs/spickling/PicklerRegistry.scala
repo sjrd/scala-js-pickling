@@ -3,8 +3,6 @@ package org.scalajs.spickling
 import scala.reflect.ClassTag
 import scala.collection.mutable
 
-import scala.scalajs.js
-
 object PicklerRegistry extends PicklerRegistry {
   class SingletonFullName[A](val name: String)
 
@@ -44,34 +42,34 @@ class PicklerRegistry {
     singletonsRev(name.name) = obj
   }
 
-  def pickle(value: Any): js.Any = {
+  def pickle[P](value: Any)(implicit builder: PBuilder[P]): P = {
     if (value == null) {
-      null
+      builder.makeNull()
     } else {
       singletons.get(value) match {
-        case Some(name) => js.Dynamic.literal(s = name)
+        case Some(name) => builder.makeObject(("s", builder.makeString(name)))
         case _ =>
           val className = value.getClass.getName
           val pickler = picklers(className)
-          val pickledValue = pickler.pickle(value.asInstanceOf[pickler.Picklee])
-          js.Dynamic.literal(
-              t = className,
-              v = pickledValue)
-          }
+          val pickledValue = pickler.pickle[P](value.asInstanceOf[pickler.Picklee])
+          builder.makeObject(
+              ("t", builder.makeString(className)),
+              ("v", pickledValue))
+      }
     }
   }
 
-  def unpickle(json: js.Any): Any = {
-    if (json eq null) {
+  def unpickle[P](pickle: P)(implicit reader: PReader[P]): Any = {
+    if (reader.isNull(pickle)) {
       null
     } else {
-      val dyn = json.asInstanceOf[js.Dynamic]
-      if (!(!dyn.s)) {
-        singletonsRev(dyn.s.asInstanceOf[js.String])
+      val s = reader.readObjectField(pickle, "s")
+      if (!reader.isUndefined(s)) {
+        singletonsRev(reader.readString(s))
       } else {
-        val className: String = dyn.t.asInstanceOf[js.String]
+        val className = reader.readString(reader.readObjectField(pickle, "t"))
         val unpickler = unpicklers(className)
-        unpickler.unpickle(dyn.v)
+        unpickler.unpickle[P](reader.readObjectField(pickle, "v"))
       }
     }
   }

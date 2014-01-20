@@ -6,6 +6,7 @@ import scala.reflect.{ ClassTag, classTag }
 import scala.scalajs.js
 import scala.scalajs.test.JasmineTest
 import org.scalajs.jasmine._
+import org.scalajs.spickling.jsany._
 
 trait PicklersTest extends JasmineTest {
   def expect_==(actual: Any, expected: Any): Unit = {

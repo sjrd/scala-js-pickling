@@ -25,22 +25,22 @@ object PicklerMaterializersImpl {
       accessor <- accessors
     } yield {
       val fieldName = accessor.name
+      val fieldString = fieldName.toString()
       q"""
-        pickle.$fieldName = registry.pickle(value.$fieldName)
+        ($fieldString, registry.pickle(value.$fieldName))
       """
     }
 
     val pickleLogic = q"""
-      val pickle = new scala.scalajs.js.Object().asInstanceOf[scala.scalajs.js.Dynamic]
-      ..$pickleFields
-      pickle
+      builder.makeObject(..$pickleFields)
     """
 
     val result = q"""
       implicit object GenPickler extends org.scalajs.spickling.Pickler[$tpe] {
         import org.scalajs.spickling._
-        override def pickle(value: $tpe)(
-            implicit registry: PicklerRegistry): scala.scalajs.js.Any = $pickleLogic
+        override def pickle[P](value: $tpe)(
+            implicit registry: PicklerRegistry,
+            builder: PBuilder[P]): P = $pickleLogic
       }
       GenPickler
     """
@@ -68,22 +68,24 @@ object PicklerMaterializersImpl {
       accessor <- accessors
     } yield {
       val fieldName = accessor.name
+      val fieldString = fieldName.toString()
       val fieldTpe = accessor.returnType
       q"""
-        registry.unpickle(pickle.$fieldName).asInstanceOf[$fieldTpe]
+        registry.unpickle(reader.readObjectField(
+            pickle, $fieldString)).asInstanceOf[$fieldTpe]
       """
     }
 
     val unpickleLogic = q"""
-      val pickle = json.asInstanceOf[scala.scalajs.js.Dynamic]
       new $tpe(..$unpickledFields)
     """
 
     val result = q"""
       implicit object GenUnpickler extends org.scalajs.spickling.Unpickler[$tpe] {
         import org.scalajs.spickling._
-        override def unpickle(json: scala.scalajs.js.Any)(
-            implicit registry: PicklerRegistry): $tpe = $unpickleLogic
+        override def unpickle[P](pickle: P)(
+            implicit registry: PicklerRegistry,
+      reader: PReader[P]): $tpe = $unpickleLogic
       }
       GenUnpickler
     """

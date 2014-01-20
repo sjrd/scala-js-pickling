@@ -14,12 +14,39 @@ val commonSettings = Seq(
 
 lazy val root = project.in(file("."))
   .settings(commonSettings: _*)
-  .aggregate(core)
+  .settings(
+      publish := {},
+      publishLocal := {}
+  )
+  .aggregate(core, corejvm, js, playjson, tests)
 
 lazy val core = project
   .settings(commonSettings: _*)
 
+lazy val corejvm = project
+  .settings(commonSettings: _*)
+  .settings(
+      sourceDirectory := (sourceDirectory in core).value
+  )
+
+lazy val js = project
+  .settings(commonSettings: _*)
+  .dependsOn(core)
+
+lazy val playjson = project
+  .settings(commonSettings: _*)
+  .settings(
+      // Play is not built against 2.11
+      scalaVersion := "2.10.3",
+      crossScalaVersions := Seq("2.10.3")
+  )
+  .dependsOn(corejvm)
+
 // tests must be in a separate project for the IDE not to choke on macros
 lazy val tests = project
   .settings(commonSettings: _*)
-  .dependsOn(core)
+  .settings(
+      publish := {},
+      publishLocal := {}
+  )
+  .dependsOn(js)
