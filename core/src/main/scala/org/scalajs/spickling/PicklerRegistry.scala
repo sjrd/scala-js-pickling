@@ -3,13 +3,18 @@ package org.scalajs.spickling
 import scala.reflect.ClassTag
 import scala.collection.mutable
 
-object PicklerRegistry extends PicklerRegistry {
+object PicklerRegistry extends BasePicklerRegistry {
   class SingletonFullName[A](val name: String)
 
   object SingletonFullName extends PicklerMaterializers
 }
 
-class PicklerRegistry {
+trait PicklerRegistry {
+  def pickle[P](value: Any)(implicit builder: PBuilder[P]): P
+  def unpickle[P](pickle: P)(implicit reader: PReader[P]): Any
+}
+
+class BasePicklerRegistry extends PicklerRegistry {
   import PicklerRegistry._
 
   private val picklers = new mutable.HashMap[String, Pickler[_]]
