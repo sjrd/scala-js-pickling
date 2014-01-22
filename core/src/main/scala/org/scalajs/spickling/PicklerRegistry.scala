@@ -10,8 +10,10 @@ object PicklerRegistry extends BasePicklerRegistry {
 }
 
 trait PicklerRegistry {
-  def pickle[P](value: Any)(implicit builder: PBuilder[P]): P
-  def unpickle[P](pickle: P)(implicit reader: PReader[P]): Any
+  def pickle[P](value: Any)(implicit builder: PBuilder[P],
+      registry: PicklerRegistry = this): P
+  def unpickle[P](pickle: P)(implicit reader: PReader[P],
+      registry: PicklerRegistry = this): Any
 }
 
 class BasePicklerRegistry extends PicklerRegistry {
@@ -21,8 +23,6 @@ class BasePicklerRegistry extends PicklerRegistry {
   private val unpicklers = new mutable.HashMap[String, Unpickler[_]]
   private val singletons = new mutable.HashMap[Any, String]
   private val singletonsRev = new mutable.HashMap[String, Any]
-
-  implicit private def self = this
 
   registerBuiltinPicklers()
 
@@ -47,7 +47,8 @@ class BasePicklerRegistry extends PicklerRegistry {
     singletonsRev(name.name) = obj
   }
 
-  def pickle[P](value: Any)(implicit builder: PBuilder[P]): P = {
+  def pickle[P](value: Any)(implicit builder: PBuilder[P],
+      registry: PicklerRegistry): P = {
     if (value == null) {
       builder.makeNull()
     } else {
@@ -64,7 +65,8 @@ class BasePicklerRegistry extends PicklerRegistry {
     }
   }
 
-  def unpickle[P](pickle: P)(implicit reader: PReader[P]): Any = {
+  def unpickle[P](pickle: P)(implicit reader: PReader[P],
+      registry: PicklerRegistry): Any = {
     if (reader.isNull(pickle)) {
       null
     } else {
