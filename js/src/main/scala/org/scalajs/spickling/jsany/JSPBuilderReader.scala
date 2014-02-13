@@ -9,8 +9,12 @@ object JSPBuilder extends PBuilder[js.Any] {
   def makeNumber(x: Double): js.Any = x
   def makeString(s: String): js.Any = s
   def makeArray(elems: js.Any*): js.Any = js.Array(elems: _*)
-  def makeObject(fields: (String, js.Any)*): js.Any =
-    js.Dynamic.literal.applyDynamicNamed("apply")(fields: _*)
+  def makeObject(fields: (String, js.Any)*): js.Any = {
+    val result = js.Dictionary.empty[js.Any]
+    for ((prop, value) <- fields)
+      result(prop) = value
+    result
+  }
 }
 
 object JSPReader extends PReader[js.Any] {
@@ -23,5 +27,5 @@ object JSPReader extends PReader[js.Any] {
   def readArrayElem(x: js.Any, index: Int): js.Any =
     x.asInstanceOf[js.Array[js.Any]].apply(index)
   def readObjectField(x: js.Any, field: String): js.Any =
-    x.asInstanceOf[js.Dictionary].apply(field)
+    x.asInstanceOf[js.Dictionary[js.Any]].apply(field)
 }
