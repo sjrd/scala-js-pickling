@@ -8,6 +8,9 @@ import scala.scalajs.test.JasmineTest
 import org.scalajs.jasmine._
 import org.scalajs.spickling.jsany._
 
+@scala.scalajs.js.annotation.JSExport("org")
+object Workaround
+
 trait PicklersTest extends JasmineTest {
   def expect_==(actual: Any, expected: Any): Unit = {
     // TODO Improve this, for example by creating my ExpectationResult myself
