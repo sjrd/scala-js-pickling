@@ -1,4 +1,4 @@
-# Scala.js Pickling 0.1
+# Scala.js Pickling 0.2
 
 Scala.js Pickling is a small serialization (aka pickling) library for
 [Scala.js](https://www.scala-js.org/). It also cross-compiles on the JVM so
@@ -63,7 +63,7 @@ Hence, in a Scala.js project, all you need to do is to add the following to
 your `build.sbt`:
 
 ```scala
-libraryDependencies += "org.scalajs" %% "scalajs-pickling" % "0.1"
+libraryDependencies += "org.scalajs" %% "scalajs-pickling" % "0.2"
 ```
 
 On the server side of a Play! application, you will need to declare the
@@ -74,7 +74,7 @@ resolvers += Resolver.url("scala-js-releases",
     url("http://dl.bintray.com/content/scala-js/scala-js-releases"))(
     Resolver.ivyStylePatterns)
 
-libraryDependencies += "org.scalajs" %% "scalajs-pickling-play-json" % "0.1"
+libraryDependencies += "org.scalajs" %% "scalajs-pickling-play-json" % "0.2"
 ```
 
 ## Reference
