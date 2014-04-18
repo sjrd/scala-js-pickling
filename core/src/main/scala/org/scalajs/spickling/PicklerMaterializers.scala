@@ -24,7 +24,7 @@ object PicklerMaterializersImpl {
     val pickleFields = for {
       accessor <- accessors
     } yield {
-      val fieldName = accessor.name
+      val fieldName = accessor.name.toTermName
       val fieldString = fieldName.toString()
       q"""
         ($fieldString, registry.pickle(value.$fieldName))
@@ -106,7 +106,7 @@ object PicklerMaterializersImpl {
 
     val name = sym.fullName+"$"
     val result = q"""
-      new org.scalajs.spickling.PicklerRegistry.SingletonFullName($name)
+      new org.scalajs.spickling.PicklerRegistry.SingletonFullName[$tpe]($name)
     """
 
     c.Expr[PicklerRegistry.SingletonFullName[T]](result)

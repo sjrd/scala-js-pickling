@@ -26,7 +26,8 @@ object PicklingBuild extends Build {
 
       libraryDependencies ++= {
         if (needQuasiquotesHack.value)
-          Seq(compilerPlugin("org.scalamacros" % "paradise" % "2.0.0-M2" cross CrossVersion.full))
+          Seq(compilerPlugin("org.scalamacros" % "paradise" % "2.0.0" cross CrossVersion.full),
+              "org.scalamacros" %% "quasiquotes" % "2.0.0")
         else
           Seq()
       },
@@ -50,12 +51,17 @@ object PicklingBuild extends Build {
                     <dependency>
                         <groupId>org.scala-lang</groupId>
                         <artifactId>scala-library</artifactId>
-                        <version>2.10.2</version>
+                        <version>2.10.4</version>
                     </dependency>
                     <dependency>
                         <groupId>org.scala-lang</groupId>
                         <artifactId>scala-reflect</artifactId>
-                        <version>2.10.2</version>
+                        <version>2.10.4</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.scalamacros</groupId>
+                        <artifactId>quasiquotes_2.10</artifactId>
+                        <version>2.0.0</version>
                     </dependency>
                   </dependencies>
                 case _ => n

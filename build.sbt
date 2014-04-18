@@ -4,8 +4,8 @@ val commonSettings = Seq(
     normalizedName ~= { _.replace("scala-js", "scalajs") },
     homepage := Some(url("http://scala-js.org/")),
     licenses += ("BSD New", url("https://github.com/scala-js/scala-js/blob/master/LICENSE")),
-    scalaVersion := "2.10.3",
-    crossScalaVersions := Seq("2.10.3", "2.11.0-M7"),
+    scalaVersion := "2.10.4",
+    crossScalaVersions := Seq("2.10.4", "2.11.0"),
     scalacOptions ++= Seq(
         //"-deprecation", // need to use deprecated things to be compat with 2.10
         "-unchecked",
@@ -55,7 +55,7 @@ lazy val playjson = project
   .settings(commonSettings: _*)
   .settings(
       // Play is not built against 2.11
-      crossScalaVersions := Seq("2.10.3")
+      crossScalaVersions := Seq("2.10.4")
   )
   .dependsOn(corejvm)
 
