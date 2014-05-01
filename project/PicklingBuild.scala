@@ -7,13 +7,6 @@ import scala.xml.transform._
 
 object PicklingBuild extends Build {
 
-  val myScalaJSSettings: Seq[Setting[_]] = scalaJSAbstractSettings ++ Seq(
-      resolvers ++= Seq(scalaJSReleasesResolver, scalaJSSnapshotsResolver),
-      autoCompilerPlugins := true,
-      addCompilerPlugin("org.scala-lang.modules.scalajs" %% "scalajs-compiler" % scalaJSVersion),
-      libraryDependencies += "org.scala-lang.modules.scalajs" %% "scalajs-library" % scalaJSVersion
-  )
-
   val needQuasiquotesHack = Def.setting(scalaVersion.value startsWith "2.10.")
 
   val enableQuasiquotesIn210 = Seq(

@@ -1,4 +1,4 @@
-myScalaJSSettings
+scalaJSSettings
 
 name := "Scala.js pickling tests"
 
