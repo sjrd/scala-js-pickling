@@ -53,10 +53,6 @@ lazy val js = project
 
 lazy val playjson = project
   .settings(commonSettings: _*)
-  .settings(
-      // Play is not built against 2.11
-      crossScalaVersions := Seq("2.10.4")
-  )
   .dependsOn(corejvm)
 
 // tests must be in a separate project for the IDE not to choke on macros
