@@ -1,6 +1,6 @@
 val commonSettings = Seq(
     organization := "org.scalajs",
-    version := "0.4-SNAPSHOT",
+    version := "0.3.1",
     normalizedName ~= { _.replace("scala-js", "scalajs") },
     homepage := Some(url("http://scala-js.org/")),
     licenses += ("BSD New", url("https://github.com/scala-js/scala-js/blob/master/LICENSE")),
