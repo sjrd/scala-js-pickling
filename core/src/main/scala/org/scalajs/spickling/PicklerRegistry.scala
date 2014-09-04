@@ -2,6 +2,10 @@ package org.scalajs.spickling
 
 import scala.reflect.ClassTag
 import scala.collection.mutable
+import scala.collection.immutable.Map.{Map1, Map2, Map3, Map4}
+import scala.collection.immutable.HashMap.HashTrieMap
+import scala.collection.immutable.Set.{Set1, Set2, Set3, Set4}
+import scala.collection.immutable.HashSet.HashTrieSet
 
 object PicklerRegistry extends BasePicklerRegistry {
   class SingletonFullName[A](val name: String)
@@ -92,6 +96,31 @@ class BasePicklerRegistry extends PicklerRegistry {
     registerPrimitive[Double, java.lang.Double]
 
     register[String]
+
+    // java date
+    register[java.util.Date]
+    // TODO: fix error
+    // option
+    //register(None)
+    //register[Some[Any]]
+    // list
+    //register[::[Any]]
+    //register(Nil)
+    // map
+    registerInternal((Map[Nothing, Nothing]()).getClass, Pickler.MapPickler, Unpickler.MapUnpickler)
+    register[Map[Any, Any]]
+    register[Map1[Any, Any]]
+    register[Map2[Any, Any]]
+    register[Map3[Any, Any]]
+    register[Map4[Any, Any]]
+    register[HashTrieMap[Any, Any]]
+    registerInternal((Set[Nothing]()).getClass, Pickler.SetPickler, Unpickler.SetUnpickler)
+    register[Set[Any]]
+    register[Set1[Any]]
+    register[Set2[Any]]
+    register[Set3[Any]]
+    register[Set4[Any]]
+    register[HashTrieSet[Any]]
   }
 
   private def registerPrimitive[P : ClassTag, W : ClassTag](
@@ -100,3 +129,4 @@ class BasePicklerRegistry extends PicklerRegistry {
     registerInternal(implicitly[ClassTag[W]].runtimeClass, pickler, unpickler)
   }
 }
+    // TODO: fix error
