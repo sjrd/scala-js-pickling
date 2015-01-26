@@ -1,6 +1,5 @@
 import sbt._
 import Keys._
-import scala.scalajs.sbtplugin.ScalaJSPlugin._
 
 import scala.xml.{Node => XmlNode, NodeSeq => XmlNodeSeq, _}
 import scala.xml.transform._
