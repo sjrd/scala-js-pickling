@@ -38,10 +38,9 @@ lazy val root = project.in(file("."))
       publish := {},
       publishLocal := {}
   )
-  .aggregate(core, corejvm, js, playjson, tests)
+  .aggregate(corejs, corejvm, js, playjson, tests)
 
-lazy val core = project
-  .enablePlugins(ScalaJSPlugin)
+lazy val core = crossProject.crossType(CrossType.Pure)
   .settings(commonSettings: _*)
   .settings(enableQuasiquotesIn210: _*)
   .settings(
@@ -50,15 +49,8 @@ lazy val core = project
       "org.scala-lang" % "scala-reflect" % scalaVersion.value
   )
 
-lazy val corejvm = project
-  .settings(commonSettings: _*)
-  .settings(enableQuasiquotesIn210: _*)
-  .settings(
-    sourceDirectory := (sourceDirectory in core).value,
-    name := "Scala.js pickling core jvm",
-    libraryDependencies +=
-      "org.scala-lang" % "scala-reflect" % scalaVersion.value
-  )
+lazy val corejvm = core.jvm
+lazy val corejs = core.js
 
 lazy val js = project
   .enablePlugins(ScalaJSPlugin)
@@ -66,7 +58,7 @@ lazy val js = project
   .settings(
     name := "Scala.js pickling"
   )
-  .dependsOn(core)
+  .dependsOn(corejs)
 
 lazy val playjson = project
   .settings(commonSettings: _*)
@@ -86,7 +78,7 @@ lazy val tests = project
     publishLocal := {},
     name := "Scala.js pickling tests",
     libraryDependencies +=
-      "com.lihaoyi" %%% "utest" % "0.2.5-RC1" % "test",
+      "com.lihaoyi" %%% "utest" % "0.3.0" % "test",
     testFrameworks += new TestFramework("utest.runner.Framework")
   )
   .dependsOn(js)
