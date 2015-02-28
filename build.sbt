@@ -86,7 +86,7 @@ lazy val tests = project
     publishLocal := {},
     name := "Scala.js pickling tests",
     libraryDependencies +=
-      "com.lihaoyi" %%% "utest" % "0.2.5-RC1" % "test",
+      "com.lihaoyi" %%% "utest" % "0.3.0" % "test",
     testFrameworks += new TestFramework("utest.runner.Framework")
   )
   .dependsOn(js)
