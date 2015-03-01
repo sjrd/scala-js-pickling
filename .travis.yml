@@ -1,15 +1,8 @@
 language: scala
 script:
   - sbt ++$TRAVIS_SCALA_VERSION package tests/test 'set scalaJSStage in Global := FastOptStage' tests/test
-after_success:
-  - if [[ "${PUBLISH_ENABLED}" == "true" && "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "master" && "${PUBLISH_USER}" != "" && "${PUBLISH_PASS}" != "" ]]; then sbt ++$TRAVIS_SCALA_VERSION publish; fi
 scala:
   - 2.10.4
   - 2.11.5
 jdk:
   - oraclejdk7
-env:
-  global:
-    - PUBLISH_ENABLED=true
-    - secure: "b3goz/I6TMZTOF6zI/TfL8jwIwYoloJjeE/8Hg/0irJbB7Vq9j2XtlZo5YUB9k/8hW0GnVxEuYtsJIOnbUUg8B0a0kWjWtyh4a4Rm1wWNBLSj1NlMFiDOEEs+uiBy6TKJjmdP2YzTXO8HM7aXR8mGOWZnPbeHT0zlXVEvCoMEGY="
-    - secure: "KCM+AvLMfljQTZPhAoxJfvigMR/+2CsYfGp2KsPycT55BDiMb0BSzvyTjPXoroqkwrc80Ypw8VFKKKk66aGv7vPpvZtqM6fNpWOPyqRIQVbgBnww2LHzWOhO2qXko4rzPW+gIQmUVhnjEgGOmbzO5ljEtjb2tzJhq93XGEWrgaI="
