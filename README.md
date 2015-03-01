@@ -53,6 +53,40 @@ val pickle: JsValue = PicklerRegistry.pickle(Person("John", 24))
 val value: Any = PicklerRegistry.unpickle(pickle)
 ```
 
+## Important caveat with `Byte`, `Short`, `Float` and `Double`
+
+Serializing a `Byte`, `Short`, `Float` or `Double` on the JS side and
+deserializing it on the JVM side gives unexpected results.
+
+Instead of receiving a value of the type you began with, you will systematically
+receive an `Int` is the *value* fits in a `Int`, and a `Double` otherwise.
+In particular, even when the original value is typed as a `Double`, you can
+receive an `Int`.
+
+**This will cause the deserialization to go berskerk if the destination type
+cannot handle `Int`!**
+
+Work around: never use these 4 numeric types in the data structures you want to
+pickle and unpickle. Use `java.lang.Number` instead, which can accommodate both
+`Int`s and `Double`s, then use its `doubleValue()` method (or another).
+
+## Alternatives
+
+Before getting started, you should consider alternative serialization frameworks
+for Scala.js. Scala.js Pickling is rarely the best one. All the alternatives
+do not require classes to be registered in advance, for example. They also do
+more at compile-time (and are therefore faster), and do not have the caveat
+about numeric types documented hereabove.
+
+Here are the alternatives known at the time of this writing:
+
+* [uPickle](https://github.com/lihaoyi/upickle)
+* [Prickle](https://github.com/benhutchison/prickle)
+
+The main advantage of Scala.js Pickling with respect to these alternatives is
+that it is able to serialize and deserialize data whose statically known type
+is not sealed, in particular, `Any`.
+
 ## Getting Started
 
 Scala.js Pickling is published in the
