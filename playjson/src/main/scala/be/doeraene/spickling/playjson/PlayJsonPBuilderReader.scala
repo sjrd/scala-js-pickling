@@ -1,6 +1,6 @@
-package org.scalajs.spickling.playjson
+package be.doeraene.spickling.playjson
 
-import org.scalajs.spickling.{PBuilder, PReader}
+import be.doeraene.spickling.{PBuilder, PReader}
 import play.api.libs.json._
 
 object PlayJsonPBuilder extends PBuilder[JsValue] {

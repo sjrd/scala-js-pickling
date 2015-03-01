@@ -1,5 +1,4 @@
-package org.scalajs.spickling
-package test
+package be.doeraene.spickling
 
 import scala.scalajs.js
 import scala.scalajs.js.Dynamic.{ literal => lit }

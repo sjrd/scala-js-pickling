@@ -1,5 +1,4 @@
-package org.scalajs.spickling
-package test
+package be.doeraene.spickling
 
 import scala.scalajs.js
 import scala.scalajs.js.Dynamic.{ literal => lit }
@@ -19,14 +18,14 @@ object CaseClassPicklersTest extends PicklersTest {
     "pickle a Person" - {
       expectPickleEqual(
           Person("Jack", 24),
-          lit(t = "org.scalajs.spickling.test.Person", v = lit(
+          lit(t = "be.doeraene.spickling.Person", v = lit(
               name = lit(t = "java.lang.String", v = "Jack"),
               age = lit(t = "java.lang.Integer", v = 24))))
     }
 
     "unpickle a Person" - {
       expectUnpickleEqual(
-          lit(t = "org.scalajs.spickling.test.Person", v = lit(
+          lit(t = "be.doeraene.spickling.Person", v = lit(
               name = lit(t = "java.lang.String", v = "Jack"),
               age = lit(t = "java.lang.Integer", v = 24))),
           Person("Jack", 24))
@@ -35,12 +34,12 @@ object CaseClassPicklersTest extends PicklersTest {
     "pickle TrivialCaseObject" - {
       expectPickleEqual(
           TrivialCaseObject,
-          lit(s = "org.scalajs.spickling.test.TrivialCaseObject$"))
+          lit(s = "be.doeraene.spickling.TrivialCaseObject$"))
     }
 
     "unpickle TrivialCaseObject" - {
       expectUnpickleEqual(
-          lit(s = "org.scalajs.spickling.test.TrivialCaseObject$"),
+          lit(s = "be.doeraene.spickling.TrivialCaseObject$"),
           TrivialCaseObject)
     }
   }

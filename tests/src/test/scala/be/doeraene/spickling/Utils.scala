@@ -1,11 +1,10 @@
-package org.scalajs.spickling
-package test
+package be.doeraene.spickling
 
 import scala.reflect.{ ClassTag, classTag }
 
 import scala.scalajs.js
 
-import org.scalajs.spickling.jsany._
+import be.doeraene.spickling.jsany._
 
 import utest._
 

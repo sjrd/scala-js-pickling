@@ -1,4 +1,4 @@
-package org.scalajs.spickling
+package be.doeraene.spickling
 
 import scala.language.experimental.macros
 
@@ -36,8 +36,8 @@ object PicklerMaterializersImpl {
     """
 
     val result = q"""
-      implicit object GenPickler extends org.scalajs.spickling.Pickler[$tpe] {
-        import org.scalajs.spickling._
+      implicit object GenPickler extends be.doeraene.spickling.Pickler[$tpe] {
+        import be.doeraene.spickling._
         override def pickle[P](value: $tpe)(
             implicit registry: PicklerRegistry,
             builder: PBuilder[P]): P = $pickleLogic
@@ -81,8 +81,8 @@ object PicklerMaterializersImpl {
     """
 
     val result = q"""
-      implicit object GenUnpickler extends org.scalajs.spickling.Unpickler[$tpe] {
-        import org.scalajs.spickling._
+      implicit object GenUnpickler extends be.doeraene.spickling.Unpickler[$tpe] {
+        import be.doeraene.spickling._
         override def unpickle[P](pickle: P)(
             implicit registry: PicklerRegistry,
       reader: PReader[P]): $tpe = $unpickleLogic
@@ -106,7 +106,7 @@ object PicklerMaterializersImpl {
 
     val name = sym.fullName+"$"
     val result = q"""
-      new org.scalajs.spickling.PicklerRegistry.SingletonFullName[$tpe]($name)
+      new be.doeraene.spickling.PicklerRegistry.SingletonFullName[$tpe]($name)
     """
 
     c.Expr[PicklerRegistry.SingletonFullName[T]](result)

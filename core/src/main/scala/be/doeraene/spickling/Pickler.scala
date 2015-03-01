@@ -1,4 +1,4 @@
-package org.scalajs.spickling
+package be.doeraene.spickling
 
 trait Pickler[A] {
   type Picklee = A
