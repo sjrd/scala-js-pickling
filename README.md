@@ -1,4 +1,4 @@
-# Scala.js Pickling 0.3
+# Scala.js Pickling 0.4.0
 
 Scala.js Pickling is a small serialization (aka pickling) library for
 [Scala.js](https://www.scala-js.org/). It also cross-compiles on the JVM so
@@ -11,7 +11,7 @@ Therefore, types that have to be pickled and unpickled must be registered
 explicitly, (at least) once, in a `PicklerRegistry` beforehand:
 
 ```scala
-import org.scalajs.spickling._
+import be.doeraene.spickling._
 
 // custom data types
 case class Person(name: String, age: Int)
@@ -30,8 +30,10 @@ After that, the case class `Person` and the case object `TrivialCaseObject`
 can be pickled an unpickled using the following in Scala.js:
 
 ```scala
+import scala.scalajs.js
+
 // import the implicits for the js.Any pickle format (~JSON objects)
-import org.scalajs.spickling.jsany._
+import be.doeraene.spickling.jsany._
 
 // pickle and unpickle
 val pickle: js.Any = PicklerRegistry.pickle(Person("John", 24))
@@ -45,8 +47,10 @@ On the JVM, a pickle format for the Play! JSON library is provided by default,
 and is used similarly:
 
 ```scala
+import play.api.libs.json._
+
 // import the implicits for the Play! JSON pickle format
-import org.scalajs.spickling.playjson._
+import be.doeraene.spickling.playjson._
 
 // pickle and unpickle
 val pickle: JsValue = PicklerRegistry.pickle(Person("John", 24))
@@ -89,30 +93,28 @@ is not sealed, in particular, `Any`.
 
 ## Getting Started
 
-Scala.js Pickling is published in the
-[scala-js-releases repo on Bintray](https://bintray.com/scala-js/scala-js-releases),
-which is resolved by default for Scala.js projects.
+Scala.js Pickling is published on Maven Central.
 
-Hence, in a Scala.js project, all you need to do is to add the following to
-your `build.sbt`:
+On the JS side, all you need to do is to add the following to your `build.sbt`:
 
 ```scala
-libraryDependencies += "org.scalajs" %%% "scalajs-pickling" % "0.3"
+libraryDependencies += "be.doeraene" %%% "scalajs-pickling" % "0.4.0"
 ```
 
-On the server side of a Play! application, you will need to declare the
-resolver explicitly, and use the `scalajs-pickling-play-json` package:
+On the JVM side, with Play!, use:
 
 ```scala
-resolvers += Resolver.url("scala-js-releases",
-    url("http://dl.bintray.com/content/scala-js/scala-js-releases"))(
-    Resolver.ivyStylePatterns)
-
-libraryDependencies += "org.scalajs" %% "scalajs-pickling-play-json" % "0.3"
+libraryDependencies += "be.doeraene" %% "scalajs-pickling-play-json" % "0.4.0"
 ```
 
-scalajs-pickling 0.3 is built and published for Scala.js 0.5.0-M3 and following
-in the 0.5.x series, with both Scala 2.10 and 2.11.
+If you want to depend on the cross-compiling core, use:
+
+```scala
+libraryDependencies += "be.doeraene" %%% "scalajs-pickling-core" % "0.4.0"
+```
+
+scalajs-pickling 0.4.0 is built and published for Scala.js 0.6.x, with both
+Scala 2.10 and 2.11.
 
 ## Reference
 
@@ -199,7 +201,7 @@ trait PReader[P] {
 }
 ```
 
-The packages `org.scalajs.spickling.jsany` and `org.scalajs.spickling.playjson`
+The packages `be.doeraene.spickling.jsany` and `be.doeraene.spickling.playjson`
 provide implicit pickle builders and readers for `js.Any` in Scala.js, and
 `JsValue` in Play! JSON, respectively. You may define your own if you want to
 work with a different implementation of JSON.
