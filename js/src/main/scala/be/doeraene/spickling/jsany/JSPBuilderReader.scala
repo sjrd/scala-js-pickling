@@ -1,6 +1,6 @@
-package org.scalajs.spickling.jsany
+package be.doeraene.spickling.jsany
 
-import org.scalajs.spickling.{PBuilder, PReader}
+import be.doeraene.spickling.{PBuilder, PReader}
 import scala.scalajs.js
 
 object JSPBuilder extends PBuilder[js.Any] {

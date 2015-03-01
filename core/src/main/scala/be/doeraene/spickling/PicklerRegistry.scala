@@ -1,4 +1,4 @@
-package org.scalajs.spickling
+package be.doeraene.spickling
 
 import scala.reflect.ClassTag
 import scala.collection.mutable

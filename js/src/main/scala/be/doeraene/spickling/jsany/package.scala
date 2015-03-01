@@ -1,4 +1,4 @@
-package org.scalajs.spickling
+package be.doeraene.spickling
 
 package object jsany {
   implicit val builder: JSPBuilder.type = JSPBuilder

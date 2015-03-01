@@ -1,4 +1,4 @@
-package org.scalajs.spickling
+package be.doeraene.spickling
 
 trait PBuilder[P] {
   def makeNull(): P

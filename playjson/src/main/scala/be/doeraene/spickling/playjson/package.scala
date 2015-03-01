@@ -1,4 +1,4 @@
-package org.scalajs.spickling
+package be.doeraene.spickling
 
 package object playjson {
   implicit val builder: PlayJsonPBuilder.type = PlayJsonPBuilder
