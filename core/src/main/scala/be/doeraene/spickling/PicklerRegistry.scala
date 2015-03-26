@@ -32,6 +32,12 @@ class BasePicklerRegistry extends PicklerRegistry {
     unpicklers(clazz.getName) = unpickler
   }
 
+  def foo(i: Int) = i * 2
+
+  def bar(i: Int) {
+    println(i)  
+  }
+
   def register[A : ClassTag](pickler: Pickler[A],
       unpickler: Unpickler[A]): Unit = {
     registerInternal(implicitly[ClassTag[A]].runtimeClass, pickler, unpickler)
