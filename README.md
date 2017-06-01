@@ -63,7 +63,7 @@ Serializing a `Byte`, `Short`, `Float` or `Double` on the JS side and
 deserializing it on the JVM side gives unexpected results.
 
 Instead of receiving a value of the type you began with, you will systematically
-receive an `Int` is the *value* fits in a `Int`, and a `Double` otherwise.
+receive an `Int` if the *value* fits in a `Int`, and a `Double` otherwise.
 In particular, even when the original value is typed as a `Double`, you can
 receive an `Int`.
 
