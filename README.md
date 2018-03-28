@@ -1,4 +1,8 @@
-# Scala.js Pickling 0.4.0
+# Scala.js Pickling 0.4.0 -- obsolete
+
+**This project is obsolete and is not maintained anymore.
+There are [many other serialization libraries for Scala.js](https://www.scala-js.org/libraries/libs.html)
+that exist now, which do not suffer from this library's limitations.**
 
 Scala.js Pickling is a small serialization (aka pickling) library for
 [Scala.js](https://www.scala-js.org/). It also cross-compiles on the JVM so
